@@ -34,6 +34,13 @@ public class WareSkuController {
     @Autowired
     private WareSkuService wareSkuService;
 
+    @GetMapping("sku/{skuId}")
+    @ApiOperation("获取某个sku的库存信息")  //一个sku可以有多个仓库
+    public ResponseVo<List<WareSkuEntity>> queryWareBySkuId(@PathVariable("skuId")Long skuId){
+        List<WareSkuEntity> wareSkuEntities = wareSkuService.queryWareBySkuId(skuId);
+        return ResponseVo.ok(wareSkuEntities);
+    }
+
     /**
      * 列表
      */

@@ -1,7 +1,9 @@
 package com.atguigu.gmall.pms.service.impl;
 
 import org.springframework.stereotype.Service;
-import java.util.Map;
+
+import java.util.List;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -24,6 +26,17 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryEnt
         );
 
         return new PageResultVo(page);
+    }
+
+    @Override
+    public List<CategoryEntity> queryCategoriesByParentId(Long pid) {
+        QueryWrapper<CategoryEntity> wrapper = new QueryWrapper<>();
+
+//        不等于-1的时候查询对应节点下的子节点，等于-1，则查询所有节点
+        if (pid != -1) {
+            wrapper.eq("parent_id",pid);
+        }
+        return this.list(wrapper);
     }
 
 }

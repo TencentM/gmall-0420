@@ -33,6 +33,24 @@ public class AttrController {
 
     @Autowired
     private AttrService attrService;
+//http://api.gmall.com/pms/attr/category/225?type=0
+    @GetMapping("category/{cid}")
+    @ApiOperation("查询分类下的规格参数")
+    public ResponseVo<List<AttrEntity>> queryAttrByCidAndTypeOrSearchType(
+            @PathVariable("cid")Long cid,
+            @RequestParam(value = "type",required = false)Integer type,
+            @RequestParam(value = "searchType",required = false)Integer searchType
+    ){
+        List<AttrEntity> attrEntities = attrService.queryAttrByCidAndTypeOrSearchType(cid,type,searchType);
+        return ResponseVo.ok(attrEntities);
+    }
+
+    @GetMapping("group/{gid}")
+    @ApiOperation("查询组下的规格参数")
+    public ResponseVo<List<AttrEntity>> queryAttrListByGid(@PathVariable("gid")Long gid){
+        List<AttrEntity> attrEntities = attrService.queryAttrListByGid(gid);
+        return ResponseVo.ok(attrEntities);
+    }
 
     /**
      * 列表

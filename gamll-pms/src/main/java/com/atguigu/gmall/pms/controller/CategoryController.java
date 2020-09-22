@@ -34,6 +34,15 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @GetMapping("parent/{parentId}")
+    @ApiOperation("根据父级id查询子分类信息")
+    public ResponseVo<List<CategoryEntity>> queryCategoriesByParentId(@PathVariable("parentId")Long pid){
+
+        List<CategoryEntity> CategoryEntities = categoryService.queryCategoriesByParentId(pid);
+        return ResponseVo.ok(CategoryEntities);
+    }
+
+
     /**
      * 列表
      */

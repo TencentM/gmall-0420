@@ -40,7 +40,7 @@ public class BrandController {
     @GetMapping
     @ApiOperation("分页查询")
     public ResponseVo<PageResultVo> queryBrandByPage(PageParamVo paramVo){
-        PageResultVo pageResultVo = brandService.queryPage(paramVo);
+        PageResultVo pageResultVo = brandService.queryBrandByPage(paramVo);
 
         return ResponseVo.ok(pageResultVo);
     }

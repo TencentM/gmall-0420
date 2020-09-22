@@ -1,6 +1,9 @@
 package com.atguigu.gmall.pms.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -24,6 +27,14 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupMapper, AttrGroup
         );
 
         return new PageResultVo(page);
+    }
+
+    @Override
+    public List<AttrGroupEntity> queryGroupsByCid(Long cid) {
+
+        QueryWrapper<AttrGroupEntity> wrapper = new QueryWrapper<>();
+        wrapper.eq("category_id",cid);
+        return this.list(wrapper);
     }
 
 }

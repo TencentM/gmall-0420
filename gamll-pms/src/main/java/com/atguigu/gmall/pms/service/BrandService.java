@@ -17,5 +17,7 @@ import java.util.Map;
 public interface BrandService extends IService<BrandEntity> {
 
     PageResultVo queryPage(PageParamVo paramVo);
+
+    PageResultVo queryBrandByPage(PageParamVo paramVo);
 }
 

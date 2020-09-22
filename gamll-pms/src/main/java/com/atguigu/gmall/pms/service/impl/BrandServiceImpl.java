@@ -1,7 +1,10 @@
 package com.atguigu.gmall.pms.service.impl;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
+
 import java.util.Map;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -22,6 +25,18 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, BrandEntity> impl
                 paramVo.getPage(),
                 new QueryWrapper<BrandEntity>()
         );
+
+        return new PageResultVo(page);
+    }
+
+    @Override
+    public PageResultVo queryBrandByPage(PageParamVo paramVo) {
+        QueryWrapper<BrandEntity> wrapper = new QueryWrapper<>();
+        String key = paramVo.getKey();
+        if (StringUtils.isNotBlank(key)) {
+            wrapper.like("name", key).or().like("remark", key);
+        }
+        IPage<BrandEntity> page = this.page(paramVo.getPage(), wrapper);
 
         return new PageResultVo(page);
     }

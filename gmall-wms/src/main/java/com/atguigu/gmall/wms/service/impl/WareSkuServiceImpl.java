@@ -1,6 +1,8 @@
 package com.atguigu.gmall.wms.service.impl;
 
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -24,6 +26,14 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuMapper, WareSkuEntity
         );
 
         return new PageResultVo(page);
+    }
+
+    @Override
+    public List<WareSkuEntity> queryWareBySkuId(Long skuId) {
+        QueryWrapper<WareSkuEntity> wrapper = new QueryWrapper<>();
+        wrapper.eq("sku_id",skuId);
+        return this.list(wrapper);
+
     }
 
 }
