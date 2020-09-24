@@ -37,17 +37,10 @@ public class AttrGroupController {
     @Autowired
     private AttrGroupService attrGroupService;
 
-    @Autowired
-    private AttrService attrService;
-
     @GetMapping("withattrs/{catId}")
     @ApiOperation("查询分类下的组及规格参数")
     public ResponseVo<List<AttrGroupEntity>> queryAttryGroupAndAttr(@PathVariable("catId")Long cid){
         List<AttrGroupEntity> attrGroupEntities = attrGroupService.queryGroupsByCid(cid);
-        attrGroupEntities.forEach(groupEntity->{
-            List<AttrEntity> attrEntities = attrService.queryAttrListByGid(groupEntity.getId());
-            groupEntity.setAttrEntities(attrEntities);
-        });
         return ResponseVo.ok(attrGroupEntities);
     }
 

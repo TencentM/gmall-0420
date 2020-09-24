@@ -4,6 +4,7 @@ target/
 mvnw*
 *.iml
 .DS_Store
+temp/
 
 # Compiled class file
 *.class

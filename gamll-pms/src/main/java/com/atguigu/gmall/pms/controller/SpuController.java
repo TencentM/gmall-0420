@@ -2,6 +2,7 @@ package com.atguigu.gmall.pms.controller;
 
 import java.util.List;
 
+import com.atguigu.gmall.pms.vo.SpuVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,9 +71,22 @@ public class SpuController {
      */
     @PostMapping
     @ApiOperation("保存")
-    public ResponseVo<Object> save(@RequestBody SpuEntity spu){
-		spuService.save(spu);
+    public ResponseVo save(@RequestBody SpuVo spuVo){
 
+//        TODO  大保存
+        spuService.bigSave(spuVo);
+        //        1、保存spu相关信息
+//        1.1、保存pms_spu
+//        1.2、保存pms_spu_desc        spu描述信息
+//        1.3、保存pms_spu_attr_value  spu基础属性
+//        2、保存sku相关信息
+//        2.1、保存pms_sku
+//        2.2、保存pms_sku_images      sku图片信息
+//        2.3、保存pms_sku_attr_values 销售属性
+//        3、保存sku营销相关信息
+//        3.1、保存sms_sku_bounds      sku积分相关信息
+//        3.1、保存sms_sku_full_reduction      sku满减相关信息
+//        3.1、保存sms_sku_ladder      sku打折相关信息
         return ResponseVo.ok();
     }
 
