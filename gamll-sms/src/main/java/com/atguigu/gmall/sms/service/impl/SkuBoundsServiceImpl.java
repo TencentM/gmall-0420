@@ -21,6 +21,7 @@ import com.atguigu.gmall.common.bean.PageParamVo;
 import com.atguigu.gmall.sms.mapper.SkuBoundsMapper;
 import com.atguigu.gmall.sms.entity.SkuBoundsEntity;
 import com.atguigu.gmall.sms.service.SkuBoundsService;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 
@@ -44,6 +45,7 @@ public class SkuBoundsServiceImpl extends ServiceImpl<SkuBoundsMapper, SkuBounds
     }
 
     @Override
+    @Transactional
     public void saveSales(SkuSaleVo skuSaleVo) {
 //        3、保存sku营销相关信息// 要调用接口
         Long skuId = skuSaleVo.getSkuId();
@@ -64,6 +66,7 @@ public class SkuBoundsServiceImpl extends ServiceImpl<SkuBoundsMapper, SkuBounds
         skuFullReductionEntity.setAddOther(skuSaleVo.getFullAddOther());
         fullReductionMapper.insert(skuFullReductionEntity);
 
+//        int i = 10 / 0;
 //        3.1、保存sms_sku_ladder      sku打折相关信息
         SkuLadderEntity skuLadderEntity = new SkuLadderEntity();
         BeanUtils.copyProperties(skuSaleVo,skuLadderEntity);
