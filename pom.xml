@@ -25,6 +25,8 @@
         <module>gamll-pms</module>
         <module>gamll-sms</module>
         <module>gmall-sms-interface</module>
+        <module>gmall-pms-interface</module>
+        <module>gmall-wms-interface</module>
     </modules>
 
     <properties>

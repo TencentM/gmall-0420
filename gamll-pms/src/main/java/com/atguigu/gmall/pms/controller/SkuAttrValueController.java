@@ -34,6 +34,15 @@ public class SkuAttrValueController {
     @Autowired
     private SkuAttrValueService skuAttrValueService;
 
+    @GetMapping("search/{cid}/{skuId}")
+    public ResponseVo<List<SkuAttrValueEntity>> querySearchSkuAttrValueByCidAndSkuId(
+            @PathVariable("cid")Long cid,@PathVariable("skuId")Long skuId
+    ){
+        List<SkuAttrValueEntity> skuAttrValueEntities = this.skuAttrValueService.querySearchSkuAttrValueByCidAndSkuId(cid,skuId);
+
+        return ResponseVo.ok(skuAttrValueEntities);
+    }
+
     /**
      * 列表
      */
