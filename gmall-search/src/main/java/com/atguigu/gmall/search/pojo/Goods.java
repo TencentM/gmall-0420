@@ -53,6 +53,6 @@ public class Goods {
     @Field(type = FieldType.Date)
     private Date createTime;// 新品
     @Field(type = FieldType.Boolean)
-    private Boolean store; // 是否有货
+    private Boolean store = false; // 是否有货
 }
 

@@ -34,7 +34,6 @@ public class SearchParamVo {
     private Boolean store;
 
     // 分页数据
-    private Long total;
     private Integer pageNum;
     private final Integer pageSize = 20;
 }
