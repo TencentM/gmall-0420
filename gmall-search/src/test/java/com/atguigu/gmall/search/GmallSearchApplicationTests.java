@@ -102,7 +102,7 @@ class GmallSearchApplicationTests {
                         }
 
                         // SpuAttrValueEntity
-                        List<SpuAttrValueEntity> spuAttrValueEntities = pmsClient.querySearchSpuAttrValueByCidAndSkuId(spuEntity.getCategoryId(), spuEntity.getId()).getData();
+                        List<SpuAttrValueEntity> spuAttrValueEntities = pmsClient.querySearchSpuAttrValueByCidAndSkuId(skuEntity.getCatagoryId(), spuEntity.getId()).getData();
 
                         if (!CollectionUtils.isEmpty(spuAttrValueEntities)) {
                             searchAttrValueVos.addAll(spuAttrValueEntities.stream().map(spuAttrValueEntity -> {

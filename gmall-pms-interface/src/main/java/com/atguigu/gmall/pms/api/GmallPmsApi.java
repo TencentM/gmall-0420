@@ -38,5 +38,9 @@ public interface GmallPmsApi {
             @PathVariable("cid")Long cid,@PathVariable("spuId")Long spuId
     );
 
+    @GetMapping("pms/spu/{id}")
+    @ApiOperation("详情查询")
+    public ResponseVo<SpuEntity> querySpuById(@PathVariable("id") Long id);
+
 
 }
