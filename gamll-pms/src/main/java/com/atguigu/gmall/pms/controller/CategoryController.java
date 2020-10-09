@@ -42,6 +42,13 @@ public class CategoryController {
         return ResponseVo.ok(CategoryEntities);
     }
 
+    @GetMapping("parent/withsub/{pid}")
+    @ApiOperation("查询二级分类和三级分类")
+    public ResponseVo<List<CategoryEntity>> queryCategoryLvTwoWithSubsByPid(@PathVariable("pid") Long pid){
+        List<CategoryEntity> categoryEntities = this.categoryService.queryCategoryLvTwoWithSubsByPid(pid);
+        return ResponseVo.ok(categoryEntities);
+    }
+
 
     /**
      * 列表

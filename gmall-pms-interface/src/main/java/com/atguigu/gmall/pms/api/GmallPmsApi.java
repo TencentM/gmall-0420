@@ -29,6 +29,10 @@ public interface GmallPmsApi {
     @ApiOperation("详情查询")
     public ResponseVo<CategoryEntity> queryCategoryById(@PathVariable("id") Long id);
 
+    @GetMapping("pms/category/parent/withsub/{pid}")
+    @ApiOperation("查询二级分类和三级分类")
+    public ResponseVo<List<CategoryEntity>> queryCategoryLvTwoWithSubsByPid(@PathVariable("pid") Long pid);
+
     @GetMapping("pms/skuattrvalue/search/{cid}/{skuId}")
     public ResponseVo<List<SkuAttrValueEntity>> querySearchSkuAttrValueByCidAndSkuId(
             @PathVariable("cid")Long cid,@PathVariable("skuId")Long skuId);
@@ -41,6 +45,10 @@ public interface GmallPmsApi {
     @GetMapping("pms/spu/{id}")
     @ApiOperation("详情查询")
     public ResponseVo<SpuEntity> querySpuById(@PathVariable("id") Long id);
+
+    @GetMapping("pms/category/parent/{parentId}")
+    @ApiOperation("根据父级id查询子分类信息")
+    public ResponseVo<List<CategoryEntity>> queryCategoriesByParentId(@PathVariable("parentId")Long pid);
 
 
 }
