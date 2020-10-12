@@ -6,6 +6,7 @@ import com.atguigu.gmallindex.service.IndexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,6 +37,13 @@ public class IndexController {
         List<CategoryEntity> categoryEntities = this.indexService.queryLvTwoWithSubsByPid(pid);
 
         return ResponseVo.ok(categoryEntities);
+    }
+
+    @GetMapping("index/test/lock")
+    @ResponseBody
+    public ResponseVo testLock() throws InterruptedException {
+        this.indexService.testLock();
+        return ResponseVo.ok();
     }
 
 }
