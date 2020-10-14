@@ -57,11 +57,13 @@ public class SkuController {
     /**
      * 信息
      */
-    @GetMapping("{id}")
-    @ApiOperation("详情查询")
-    public ResponseVo<SkuEntity> querySkuById(@PathVariable("id") Long id){
+    @GetMapping("{skuId}")
+    @ApiOperation("根据skuid查询sku详情查询")
+    public ResponseVo<SkuEntity> querySkuById(@PathVariable("skuId") Long id){
+        System.out.println("yuncheng diaoyong jinlai");
 		SkuEntity sku = skuService.getById(id);
-
+        System.out.println("sku: " + sku );
+        System.out.println("yuncheng diaoyong fanhui");
         return ResponseVo.ok(sku);
     }
 

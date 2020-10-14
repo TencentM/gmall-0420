@@ -2,6 +2,8 @@ package com.atguigu.gmall.pms.controller;
 
 import java.util.List;
 
+import com.atguigu.gmall.pms.vo.SaleAttrValueVo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,32 @@ public class SkuAttrValueController {
 
     @Autowired
     private SkuAttrValueService skuAttrValueService;
+
+    @GetMapping("spu/mapping/{spuId}")
+    @ApiOperation("根据spuId查询spu下所有sku的销售属性组合和skuId的映射关系")
+    public ResponseVo<String> querySkuIdMappingSaleAttrValueBySpuId(@PathVariable("spuId")Long spuId){
+        String json = skuAttrValueService.querySkuIdMappingSaleAttrValueBySpuId(spuId);
+        return ResponseVo.ok(json);
+    }
+
+    @GetMapping("sku/{skuId}")
+    @ApiOperation("根据skuId查询sku的销售属性")
+    public ResponseVo<List<SkuAttrValueEntity>> queryAttrValueEntityBySkuId(@PathVariable("skuId") Long skuId){
+        QueryWrapper<SkuAttrValueEntity> wrapper = new QueryWrapper<SkuAttrValueEntity>().eq("sku_id", skuId);
+        return ResponseVo.ok(skuAttrValueService.list(wrapper));
+    }
+
+
+    @GetMapping("spu/{spuId}")
+    @ApiOperation("根据spuId查询spu下所有sku的销售属性")
+    public ResponseVo<List<SaleAttrValueVo>> querySaleAttrValuesBySpuId(@PathVariable("spuId") Long spuId){
+
+        System.out.println("---远程调用到达---");
+        List<SaleAttrValueVo> saleAttrValueVos = skuAttrValueService.queryzSaleAttrValuesBySpuId(spuId);
+        System.out.println("---远程调用返回---");
+        return ResponseVo.ok(saleAttrValueVos);
+    }
+
 
     @GetMapping("search/{cid}/{skuId}")
     public ResponseVo<List<SkuAttrValueEntity>> querySearchSkuAttrValueByCidAndSkuId(

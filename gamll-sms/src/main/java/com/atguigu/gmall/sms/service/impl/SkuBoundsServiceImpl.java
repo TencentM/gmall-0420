@@ -1,22 +1,23 @@
 package com.atguigu.gmall.sms.service.impl;
 
+import com.atguigu.gmall.common.bean.PageParamVo;
+import com.atguigu.gmall.common.bean.PageResultVo;
 import com.atguigu.gmall.sms.entity.SkuFullReductionEntity;
 import com.atguigu.gmall.sms.entity.SkuLadderEntity;
 import com.atguigu.gmall.sms.mapper.SkuFullReductionMapper;
 import com.atguigu.gmall.sms.mapper.SkuLadderMapper;
+import com.atguigu.gmall.sms.vo.ItemSaleVo;
 import com.atguigu.gmall.sms.vo.SkuSaleVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.atguigu.gmall.common.bean.PageResultVo;
-import com.atguigu.gmall.common.bean.PageParamVo;
 
 import com.atguigu.gmall.sms.mapper.SkuBoundsMapper;
 import com.atguigu.gmall.sms.entity.SkuBoundsEntity;
@@ -38,7 +39,7 @@ public class SkuBoundsServiceImpl extends ServiceImpl<SkuBoundsMapper, SkuBounds
     public PageResultVo queryPage(PageParamVo paramVo) {
         IPage<SkuBoundsEntity> page = this.page(
                 paramVo.getPage(),
-                new QueryWrapper<SkuBoundsEntity>()
+                new QueryWrapper<>()
         );
 
         return new PageResultVo(page);
@@ -61,7 +62,7 @@ public class SkuBoundsServiceImpl extends ServiceImpl<SkuBoundsMapper, SkuBounds
         this.save(skuBoundsEntity);
 //        3.1、保存sms_sku_full_reduction      sku满减相关信息
         SkuFullReductionEntity skuFullReductionEntity = new SkuFullReductionEntity();
-        BeanUtils.copyProperties(skuSaleVo,skuFullReductionEntity);
+        BeanUtils.copyProperties(skuSaleVo, skuFullReductionEntity);
         skuFullReductionEntity.setSkuId(skuId);
         skuFullReductionEntity.setAddOther(skuSaleVo.getFullAddOther());
         fullReductionMapper.insert(skuFullReductionEntity);
@@ -69,10 +70,42 @@ public class SkuBoundsServiceImpl extends ServiceImpl<SkuBoundsMapper, SkuBounds
 //        int i = 10 / 0;
 //        3.1、保存sms_sku_ladder      sku打折相关信息
         SkuLadderEntity skuLadderEntity = new SkuLadderEntity();
-        BeanUtils.copyProperties(skuSaleVo,skuLadderEntity);
+        BeanUtils.copyProperties(skuSaleVo, skuLadderEntity);
         skuLadderEntity.setSkuId(skuId);
         skuLadderEntity.setAddOther(skuSaleVo.getLadderAddOther());
         ladderMapper.insert(skuLadderEntity);
+    }
+
+    @Override
+    public List<ItemSaleVo> queryItemSalesBySkuId(Long skuId) {
+
+        List<ItemSaleVo> itemSaleVos = new ArrayList<>();
+        // 查询积分优惠
+        SkuBoundsEntity skuBoundsEntity = this.getOne(new QueryWrapper<SkuBoundsEntity>().eq("sku_id", skuId));
+        if (skuBoundsEntity != null) {
+            ItemSaleVo itemSaleVo = new ItemSaleVo();
+            itemSaleVo.setType("积分");
+            itemSaleVo.setDesc("赠送" + skuBoundsEntity.getGrowBounds() + "成长积分，赠送" + skuBoundsEntity.getBuyBounds() + "购物积分");
+            itemSaleVos.add(itemSaleVo);
+        }
+        // 查询满减优惠
+        SkuFullReductionEntity fullReductionEntity = fullReductionMapper.selectOne(new QueryWrapper<SkuFullReductionEntity>().eq("sku_id", skuId));
+        if (fullReductionEntity != null) {
+            ItemSaleVo itemSaleVo = new ItemSaleVo();
+            itemSaleVo.setType("满减");
+            itemSaleVo.setDesc("满" + fullReductionEntity.getFullPrice() + "件，减" + fullReductionEntity.getReducePrice());
+            itemSaleVos.add(itemSaleVo);
+        }
+        // 查询打折优惠
+        SkuLadderEntity skuLadderEntity = ladderMapper.selectOne(new QueryWrapper<SkuLadderEntity>().eq("sku_id", skuId));
+        if (skuLadderEntity != null) {
+            ItemSaleVo itemSaleVo = new ItemSaleVo();
+            itemSaleVo.setType("打折");
+            itemSaleVo.setDesc("满" + skuLadderEntity.getFullCount() + "打" + skuLadderEntity.getFullCount() / 10 + "折");
+            itemSaleVos.add(itemSaleVo);
+        }
+
+        return itemSaleVos;
     }
 
 }

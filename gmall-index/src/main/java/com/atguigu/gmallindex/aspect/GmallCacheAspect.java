@@ -7,6 +7,7 @@ import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.redisson.api.RBloomFilter;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.redisson.client.RedisClient;
@@ -30,6 +31,9 @@ public class GmallCacheAspect {
     @Autowired
     private RedissonClient redissonClient;
 
+    @Autowired
+    private RBloomFilter bloomFilter;
+
     /**
      * api回顾：
      *  获取目标方法参数：joinPoint.getArgs()
@@ -43,6 +47,12 @@ public class GmallCacheAspect {
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
 
         System.out.println("环绕通知前");
+        List<Object> args = Arrays.asList(joinPoint.getArgs());
+        System.out.println(args);
+        String pid = args.get(0).toString();
+        if (!bloomFilter.contains(pid)) {
+            return null;
+        }
         // 获取方法签名对象
         MethodSignature signature = (MethodSignature)joinPoint.getSignature();
         // 获取目标方法对象
@@ -55,7 +65,7 @@ public class GmallCacheAspect {
         // 获取缓存前缀
         String prefix = gmallCache.prefix();
         // 获取方法参数
-        List<Object> args = Arrays.asList(joinPoint.getArgs());
+
         String key = prefix + args;
          // 查询缓存，缓存中有直接返回
         String json = this.redisTemplate.opsForValue().get(key);

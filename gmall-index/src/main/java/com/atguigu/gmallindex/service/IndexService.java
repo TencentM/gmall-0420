@@ -42,46 +42,53 @@ public class IndexService {
      *
      * @return
      */
-    @GmallCache(prefix = KEY_PREFIX, timeout = 129600, random = 7200, lock = "lock")
+//    @GmallCache(prefix = KEY_PREFIX, timeout = 129600, random = 7200, lock = "lock")
     public List<CategoryEntity> queryLvOneCategories() {
         // TODO 先查询缓存，注解解决
-//        String json = redisTemplate.opsForValue().get(KEY_PREFIX + 0);
-//        if (StringUtils.isNotBlank(json)){
-//            return JSON.parseArray(json,CategoryEntity.class);
-//        }
-        System.out.println();
-        ResponseVo<List<CategoryEntity>> categories = pmsClient.queryCategoriesByParentId(0L);
-        //        redisTemplate.opsForValue().set(KEY_PREFIX+0,JSON.toJSONString(categoryEntities),30,TimeUnit.DAYS);
-
-        return categories.getData();
-
-    }
-
-    public List<CategoryEntity> queryLvTwoWithSubsByPid(Long pid) {
-        // 先查询缓存
-        String json = redisTemplate.opsForValue().get(KEY_PREFIX + pid);
+        String json = redisTemplate.opsForValue().get(KEY_PREFIX + 0);
         if (StringUtils.isNotBlank(json)) {
             return JSON.parseArray(json, CategoryEntity.class);
         }
+        System.out.println("-----------");
+        ResponseVo<List<CategoryEntity>> categories = pmsClient.queryCategoriesByParentId(0L);
+        List<CategoryEntity> categoryEntities = categories.getData();
+        redisTemplate.opsForValue().set(KEY_PREFIX + 0, JSON.toJSONString(categoryEntities), 30, TimeUnit.DAYS);
+
+        return categoryEntities;
+
+    }
+
+    @GmallCache(prefix = KEY_PREFIX, timeout = 129600, random = 7200, lock = "lock")
+    public List<CategoryEntity> queryLvTwoWithSubsByPid(Long pid) {
+        // 先查询缓存
+//        String json = redisTemplate.opsForValue().get(KEY_PREFIX + pid);
+//        if (StringUtils.isNotBlank(json)) {
+//            return JSON.parseArray(json, CategoryEntity.class);
+//        }
 
         // 缓存中没有命中，加锁，防止缓存击穿：热点key过期，大量请求访问
-        RLock lock = lock = redissonClient.getLock("lock" + pid);
-        List<CategoryEntity> categoryEntities;
-        try {
-            lock.lock();
-            ResponseVo<List<CategoryEntity>> listResponseVo = pmsClient.queryCategoryLvTwoWithSubsByPid(pid);
-            categoryEntities = listResponseVo.getData();
-            // 防止缓存穿透：大量请求访问不存在数据；
-            if (CollectionUtils.isEmpty(categoryEntities)) {
-                redisTemplate.opsForValue().set(KEY_PREFIX + pid, JSON.toJSONString(categoryEntities), 5, TimeUnit.MINUTES);
-            } else {
-                // 有效时间设置一个随机值，防止大量缓存同时过期，造成缓存雪崩：大量缓存同时过期
-                redisTemplate.opsForValue().set(KEY_PREFIX + pid, JSON.toJSONString(categoryEntities), 30 + new Random().nextInt(5), TimeUnit.DAYS);
-            }
-        } finally {
-            lock.unlock();
-        }
-        return categoryEntities;
+//        RLock lock = lock = redissonClient.getLock("lock" + pid);
+//        List<CategoryEntity> categoryEntities;
+//        try {
+//            lock.lock();
+//            ResponseVo<List<CategoryEntity>> listResponseVo = pmsClient.queryCategoryLvTwoWithSubsByPid(pid);
+//            categoryEntities = listResponseVo.getData();
+//            // 防止缓存穿透：大量请求访问不存在数据；
+//            if (CollectionUtils.isEmpty(categoryEntities)) {
+//                redisTemplate.opsForValue().set(KEY_PREFIX + pid, JSON.toJSONString(categoryEntities), 5, TimeUnit.MINUTES);
+//            } else {
+//                // 有效时间设置一个随机值，防止大量缓存同时过期，造成缓存雪崩：大量缓存同时过期
+//                redisTemplate.opsForValue().set(KEY_PREFIX + pid, JSON.toJSONString(categoryEntities), 30 + new Random().nextInt(5), TimeUnit.DAYS);
+//            }
+//        } finally {
+//            lock.unlock();
+//        }
+//        return categoryEntities;
+
+        ResponseVo<List<CategoryEntity>> listResponseVo = pmsClient.queryCategoryLvTwoWithSubsByPid(pid);
+        // 防止缓存穿透：大量请求访问不存在数据；
+        return listResponseVo.getData();
+
     }
 
 

@@ -2,6 +2,9 @@ package com.atguigu.gmallindex;
 
 
 
+import com.atguigu.gmall.common.bean.ResponseVo;
+import com.atguigu.gmall.pms.entity.CategoryEntity;
+import com.atguigu.gmallindex.feign.GmallPmsClient;
 import com.google.common.base.Charsets;
 import com.google.common.hash.BloomFilter;
 import com.google.common.hash.Funnels;
@@ -10,11 +13,20 @@ import org.redisson.api.RBloomFilter;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.CollectionUtils;
+
+import java.util.List;
 
 @SpringBootTest
 class GmallIndexApplicationTests {
     @Autowired
-    RedissonClient redissonClient;
+    private RedissonClient redissonClient;
+
+    @Autowired
+    private RBloomFilter<String> bloomFilter;
+
+    @Autowired
+    private GmallPmsClient pmsClient;
 
     @Test
     void contextLoads() {
@@ -44,4 +56,17 @@ class GmallIndexApplicationTests {
         System.out.println(bloomFilter.contains("14"));
         System.out.println(bloomFilter.contains("15"));
     }
+
+
+    @Test
+    public void testBloomFilter2(){
+        ResponseVo<List<CategoryEntity>> listResponseVo = this.pmsClient.queryCategoriesByParentId(0L);
+        List<CategoryEntity> categoryEntities = listResponseVo.getData();
+        if (!CollectionUtils.isEmpty(categoryEntities)){
+            categoryEntities.forEach(categoryEntity -> {
+                bloomFilter.add(categoryEntity.getId().toString());
+            });
+        }
+    }
+
 }

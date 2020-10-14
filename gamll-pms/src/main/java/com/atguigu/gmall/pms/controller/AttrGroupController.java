@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.atguigu.gmall.pms.entity.AttrEntity;
 import com.atguigu.gmall.pms.service.AttrService;
+import com.atguigu.gmall.pms.vo.ItemGroupVo;
 import com.sun.org.apache.regexp.internal.RE;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,6 +37,19 @@ public class AttrGroupController {
 
     @Autowired
     private AttrGroupService attrGroupService;
+
+    @GetMapping("with/attr/value/{categoryId}")
+    @ApiOperation("根据categoryId，spuId，skuId查询组及组下的规格参数和值")
+    public ResponseVo<List<ItemGroupVo>> queryGroupsWithAttrAndValueByCidAndSpuIdAndSkuId(
+            @PathVariable("categoryId")Long categoryId,
+            @RequestParam("spuId")Long spuId,
+            @RequestParam("skuId")Long skuId
+    ){
+        List<ItemGroupVo> itemGroupVos = this.attrGroupService.queryGroupsWithAttrAndValueByCidAndSpuIdAndSkuId(categoryId,spuId,skuId);
+        return ResponseVo.ok(itemGroupVos);
+
+    }
+
 
     @GetMapping("withattrs/{catId}")
     @ApiOperation("查询分类下的组及规格参数")
