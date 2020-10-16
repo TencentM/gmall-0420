@@ -1,13 +1,12 @@
 package com.atguigu.gmall.pms.service;
 
 import com.atguigu.gmall.pms.vo.SaleAttrValueVo;
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.atguigu.gmall.common.bean.PageResultVo;
 import com.atguigu.gmall.common.bean.PageParamVo;
+import com.atguigu.gmall.common.bean.PageResultVo;
 import com.atguigu.gmall.pms.entity.SkuAttrValueEntity;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * sku销售属性&值

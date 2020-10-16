@@ -1,6 +1,6 @@
 package com.atguigu.gmall.item.service;
 
-import com.atguigu.gamll.wms.entity.WareSkuEntity;
+import com.atguigu.gmall.wms.entity.WareSkuEntity;
 import com.atguigu.gmall.common.bean.ResponseVo;
 import com.atguigu.gmall.item.feign.GmallPmsClient;
 import com.atguigu.gmall.item.feign.GmallSmsClient;
@@ -8,7 +8,6 @@ import com.atguigu.gmall.item.feign.GmallWmsClient;
 import com.atguigu.gmall.item.vo.ItemVo;
 import com.atguigu.gmall.pms.entity.*;
 import com.atguigu.gmall.pms.vo.ItemGroupVo;
-import com.atguigu.gmall.pms.vo.SaleAttrValueVo;
 import com.atguigu.gmall.sms.vo.ItemSaleVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import org.springframework.util.CollectionUtils;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
 

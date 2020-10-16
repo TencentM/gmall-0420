@@ -20,6 +20,8 @@ public class CorsFilterConfig {
         corsConfiguration.addAllowedOrigin("http://index.gmall.com");
         corsConfiguration.addAllowedOrigin("http://gmall.com");
         corsConfiguration.addAllowedOrigin("http://www.gmall.com");
+        corsConfiguration.addAllowedOrigin("http://auth.gmall.com");
+        corsConfiguration.addAllowedOrigin("http://sso.gmall.com");
         /*是否允许携带cookie*/
         corsConfiguration.setAllowCredentials(true);
         /*允许跨域访问的请求方式*/

@@ -3,6 +3,11 @@ package com.atguigu.gmall.pms.controller;
 import java.util.List;
 
 import com.atguigu.gmall.pms.vo.SpuVo;
+import com.atguigu.gmall.common.bean.PageParamVo;
+import com.atguigu.gmall.common.bean.PageResultVo;
+import com.atguigu.gmall.common.bean.ResponseVo;
+import com.atguigu.gmall.pms.entity.SpuEntity;
+import com.atguigu.gmall.pms.service.SpuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.atguigu.gmall.pms.entity.SpuEntity;
-import com.atguigu.gmall.pms.service.SpuService;
-import com.atguigu.gmall.common.bean.PageResultVo;
-import com.atguigu.gmall.common.bean.ResponseVo;
-import com.atguigu.gmall.common.bean.PageParamVo;
 
 /**
  * spu信息
@@ -37,7 +35,7 @@ public class SpuController {
 
     @GetMapping("category/{categoryId}")
     @ApiOperation("按照分类id分页查询商品列表")
-    public ResponseVo<PageResultVo> querySpuByCidPage(@PathVariable("categoryId")Long cid,PageParamVo pageParamVo){
+    public ResponseVo<PageResultVo> querySpuByCidPage(@PathVariable("categoryId")Long cid, PageParamVo pageParamVo){
         PageResultVo pageResultVo = spuService.querySpuByCidPage(cid,pageParamVo);
         return ResponseVo.ok(pageResultVo);
     }

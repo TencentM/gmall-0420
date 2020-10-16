@@ -2,6 +2,11 @@ package com.atguigu.gmall.ums.controller;
 
 import java.util.List;
 
+import com.atguigu.gmall.common.bean.PageParamVo;
+import com.atguigu.gmall.common.bean.PageResultVo;
+import com.atguigu.gmall.common.bean.ResponseVo;
+import com.atguigu.gmall.ums.entity.UserEntity;
+import com.atguigu.gmall.ums.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.atguigu.gmall.ums.entity.UserEntity;
-import com.atguigu.gmall.ums.service.UserService;
-import com.atguigu.gmall.common.bean.PageResultVo;
-import com.atguigu.gmall.common.bean.ResponseVo;
-import com.atguigu.gmall.common.bean.PageParamVo;
 
 /**
  * 用户表
@@ -33,6 +32,27 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @PostMapping("register")
+    @ApiOperation("用户注册")
+    public ResponseVo register(@RequestParam("code") String code, UserEntity userEntity){
+        this.userService.register(code,userEntity);
+        return ResponseVo.ok();
+    }
+
+    @GetMapping("check/{data}/{type}")
+    @ApiOperation("检查注册信息是否可用")
+    public ResponseVo<Boolean> checkData(@PathVariable("data")String data,@PathVariable("type")Integer type){
+        Boolean b = this.userService.checkData(data,type);
+        return ResponseVo.ok(b);
+    }
+
+    @GetMapping("query")
+    @ApiOperation("用户登录")
+    public ResponseVo<UserEntity> queryUser(@RequestParam("loginName")String loginName,@RequestParam("password")String password){
+        UserEntity userEntity = this.userService.queryUser(loginName,password);
+        return ResponseVo.ok(userEntity);
+    }
 
     /**
      * 列表

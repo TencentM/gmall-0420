@@ -2,6 +2,7 @@ package com.atguigu.gmall.sms.controller;
 
 import java.util.List;
 
+import com.atguigu.gmall.sms.service.SkuBoundsService;
 import com.atguigu.gmall.sms.vo.ItemSaleVo;
 import com.atguigu.gmall.sms.vo.SkuSaleVo;
 import io.swagger.annotations.Api;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.atguigu.gmall.sms.entity.SkuBoundsEntity;
-import com.atguigu.gmall.sms.service.SkuBoundsService;
 import com.atguigu.gmall.common.bean.PageResultVo;
 import com.atguigu.gmall.common.bean.ResponseVo;
 import com.atguigu.gmall.common.bean.PageParamVo;

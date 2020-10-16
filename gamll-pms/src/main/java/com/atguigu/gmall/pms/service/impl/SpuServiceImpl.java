@@ -1,7 +1,6 @@
 package com.atguigu.gmall.pms.service.impl;
 
 import com.atguigu.gmall.pms.entity.*;
-import com.atguigu.gmall.pms.mapper.SkuImagesMapper;
 import com.atguigu.gmall.pms.mapper.SkuMapper;
 import com.atguigu.gmall.pms.mapper.SpuDescMapper;
 import com.atguigu.gmall.pms.service.*;
@@ -15,7 +14,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -27,7 +25,6 @@ import com.atguigu.gmall.common.bean.PageParamVo;
 import com.atguigu.gmall.pms.mapper.SpuMapper;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 

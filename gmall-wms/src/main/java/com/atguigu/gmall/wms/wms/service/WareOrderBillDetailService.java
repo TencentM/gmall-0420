@@ -1,0 +1,19 @@
+package com.atguigu.gmall.wms.wms.service;
+
+import com.atguigu.gmall.common.bean.PageParamVo;
+import com.atguigu.gmall.common.bean.PageResultVo;
+import com.atguigu.gmall.wms.entity.WareOrderBillDetailEntity;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+ * 库存工作单
+ *
+ * @author Zgp
+ * @email zgp8050@gmail.com
+ * @date 2020-09-21 18:04:43
+ */
+public interface WareOrderBillDetailService extends IService<WareOrderBillDetailEntity> {
+
+    PageResultVo queryPage(PageParamVo paramVo);
+}
+

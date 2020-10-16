@@ -2,7 +2,6 @@ package com.atguigu.gmallindex.service;
 
 import com.alibaba.fastjson.JSON;
 import com.atguigu.gmall.common.bean.ResponseVo;
-import com.atguigu.gmall.pms.api.GmallPmsApi;
 import com.atguigu.gmall.pms.entity.CategoryEntity;
 import com.atguigu.gmallindex.aspect.GmallCache;
 import com.atguigu.gmallindex.feign.GmallPmsClient;
@@ -14,12 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
-import java.security.Key;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
