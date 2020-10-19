@@ -28,7 +28,7 @@ import java.util.Map;
 
 @EnableConfigurationProperties(JwtProperties.class)
 @Component
-public class AuthGatewayFilterFactory extends AbstractGatewayFilterFactory<AuthGatewayFilterFactory.PathConfig> {
+public class AuthGatewayFilterFactory  extends AbstractGatewayFilterFactory<AuthGatewayFilterFactory.PathConfig> {
 
     @Autowired
     private JwtProperties properties;

@@ -14,7 +14,7 @@ import java.util.Map;
 @Data
 public class ItemVo {
 
-    // 一二三级分类信息
+    // 一二三级分类信息categories
     private List<CategoryEntity> categories;
 
     // 品牌相关信息

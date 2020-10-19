@@ -53,14 +53,14 @@ public class ItemService {
             return skuEntity;
         }, threadPoolExecutor);
 
-        try {
-            SkuEntity skuEntity1 = skuEntityCompletableFuture.get();
-            if (skuEntity1 != null) {
-                return null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            SkuEntity skuEntity1 = skuEntityCompletableFuture.get();
+//            if (skuEntity1 == null) {
+//                return null;
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         CompletableFuture<Void> cateCompletableFuture = skuEntityCompletableFuture.thenAcceptAsync(skuEntity -> {
             // 2 一二三级分类信息
@@ -145,6 +145,7 @@ public class ItemService {
                 mappingCompletableFuture,descCompletableFuture,groupCompletableFuture).join();
 
 //        System.out.println("chulai------------");
+        System.out.println("itemVo : " + itemVo);
         return itemVo;
     }
 }

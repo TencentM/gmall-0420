@@ -41,6 +41,9 @@ spring:
           uri: lb://index-service
           predicates:
             - Path=/index/**
+#          filters:
+#            - AddResponseHeader=xxx,yyy,zzz
+#            - Auth=/
         - id: item-route # 首页的同步请求路由
           uri: lb://item-service
           predicates:
@@ -49,6 +52,10 @@ spring:
           uri: lb://auth-service
           predicates:
             - Host=sso.gmall.com
+        - id: cart-route
+          uri: lb://cart-service
+          predicates:
+            - Host=cart.gmall.com
 
 auth:
   jwt:
